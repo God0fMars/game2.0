@@ -43,84 +43,114 @@
 #include "CBouncingBall.h"
 
 namespace game_framework {
-	/////////////////////////////////////////////////////////////////////////////
-	// Constants
-	/////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
+// Constants
+/////////////////////////////////////////////////////////////////////////////
 
-	enum AUDIO_ID {				// 定義各種音效的編號
-		AUDIO_DING,				// 0
-		AUDIO_LAKE,				// 1
-		AUDIO_NTUT				// 2
-	};
+enum AUDIO_ID {				// 定義各種音效的編號
+    AUDIO_DING,				// 0
+    AUDIO_LAKE,				// 1
+    AUDIO_NTUT				// 2
+};
 
-	/////////////////////////////////////////////////////////////////////////////
-	// 這個class為遊戲的遊戲開頭畫面物件
-	// 每個Member function的Implementation都要弄懂
-	/////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
+// 這個class為遊戲的遊戲開頭畫面物件
+// 每個Member function的Implementation都要弄懂
+/////////////////////////////////////////////////////////////////////////////
 
-	class CGameStateInit : public CGameState {
-	public:
-		CGameStateInit(CGame *g);
-		void OnInit();  								// 遊戲的初值及圖形設定
-		void OnBeginState();							// 設定每次重玩所需的變數
-		void OnKeyUp(UINT, UINT, UINT); 				// 處理鍵盤Up的動作
-		void OnLButtonDown(UINT nFlags, CPoint point);  // 處理滑鼠的動作
-	protected:
-		void OnShow();									// 顯示這個狀態的遊戲畫面
-	private:
-		CMovingBitmap logo;								// csie的logo
-	};
+class CGameStateInit : public CGameState {
+public:
+    CGameStateInit(CGame* g);
+    void OnInit();  								// 遊戲的初值及圖形設定
+    void OnBeginState();							// 設定每次重玩所需的變數
+    void OnKeyUp(UINT, UINT, UINT); 				// 處理鍵盤Up的動作
+    void OnLButtonDown(UINT nFlags, CPoint point);  // 處理滑鼠的動作
+protected:
+    void OnShow();									// 顯示這個狀態的遊戲畫面
+private:
+    CMovingBitmap logo;								// csie的logo
+};
 
-	/////////////////////////////////////////////////////////////////////////////
-	// 這個class為遊戲的遊戲執行物件，主要的遊戲程式都在這裡
-	// 每個Member function的Implementation都要弄懂
-	/////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
+// 這個class為遊戲的遊戲執行物件，主要的遊戲程式都在這裡
+// 每個Member function的Implementation都要弄懂
+/////////////////////////////////////////////////////////////////////////////
+class CPractice {
+public:
+	CPractice();
+	void LoadBitmap();
+	void OnMove();
+	void OnShow();
+private:
+	CMovingBitmap pic;
+	int x, y;
+};
+/////////////////////////////////////////////////////
+//這個class將圖片所使用的移動和圖示製作成一物件
+////////////////////////////////////////////////////
+class CGameMap
+{
+public:
+	CGameMap();
+	void LoadBitmap();								//載入地圖
+	void OnShow();									//顯示地圖
+protected:
+	CMovingBitmap blue, green;						//建立藍色和綠色地圖
+	int map[4][5];									//建立一個地圖矩陣的index
+	const int X, Y;									//大地圖的左上角x,y座標
+	const int MW, MH;								//每張小地圖的寬高度
+};
+//////////////////////////////////////////////////
+//新地圖
+/////////////////////////////////////////////////
+class CGameStateRun : public CGameState {
+public:
+    CGameStateRun(CGame* g);
+    ~CGameStateRun();
+    void OnBeginState();							// 設定每次重玩所需的變數
+    void OnInit();  								// 遊戲的初值及圖形設定
+    void OnKeyDown(UINT, UINT, UINT);
+    void OnKeyUp(UINT, UINT, UINT);
+    void OnLButtonDown(UINT nFlags, CPoint point);  // 處理滑鼠的動作
+    void OnLButtonUp(UINT nFlags, CPoint point);	// 處理滑鼠的動作
+    void OnMouseMove(UINT nFlags, CPoint point);	// 處理滑鼠的動作
+    void OnRButtonDown(UINT nFlags, CPoint point);  // 處理滑鼠的動作
+    void OnRButtonUp(UINT nFlags, CPoint point);	// 處理滑鼠的動作
+protected:
+    void OnMove();									// 移動遊戲元素
+    void OnShow();									// 顯示這個狀態的遊戲畫面
+private:
+	CGameMap		gamemap;	//地圖
+	CPractice		c_practice;
+    const int		NUMBALLS;	// 球的總數
+    CMovingBitmap	cat;
+    CMovingBitmap	JP;
+    int				picX, picY;
+    CMovingBitmap	background;	// 背景圖
+    CMovingBitmap	help;		// 說明圖
+    CBall*			ball;		// 球的陣列
+    CMovingBitmap	corner;		// 角落圖
+    CEraser			eraser;		// 拍子
+    CInteger		hits_left;	// 剩下的撞擊數
+    CBouncingBall   bball;		// 反覆彈跳的球
 
-	class CGameStateRun : public CGameState {
-	public:
-		CGameStateRun(CGame *g);
-		~CGameStateRun();
-		void OnBeginState();							// 設定每次重玩所需的變數
-		void OnInit();  								// 遊戲的初值及圖形設定
-		void OnKeyDown(UINT, UINT, UINT);
-		void OnKeyUp(UINT, UINT, UINT);
-		void OnLButtonDown(UINT nFlags, CPoint point);  // 處理滑鼠的動作
-		void OnLButtonUp(UINT nFlags, CPoint point);	// 處理滑鼠的動作
-		void OnMouseMove(UINT nFlags, CPoint point);	// 處理滑鼠的動作 
-		void OnRButtonDown(UINT nFlags, CPoint point);  // 處理滑鼠的動作
-		void OnRButtonUp(UINT nFlags, CPoint point);	// 處理滑鼠的動作
-	protected:
-		void OnMove();									// 移動遊戲元素
-		void OnShow();									// 顯示這個狀態的遊戲畫面
-	private:
-		const int		NUMBALLS;	// 球的總數
-		CMovingBitmap	cat;
-		CMovingBitmap	JP;
-		CMovingBitmap	background;	// 背景圖
-		CMovingBitmap	help;		// 說明圖
-		CBall			*ball;		// 球的陣列
-		CMovingBitmap	corner;		// 角落圖
-		CEraser			eraser;		// 拍子
-		CInteger		hits_left;	// 剩下的撞擊數
-		CBouncingBall   bball;		// 反覆彈跳的球
-		
-	};
+};
 
-	/////////////////////////////////////////////////////////////////////////////
-	// 這個class為遊戲的結束狀態(Game Over)
-	// 每個Member function的Implementation都要弄懂
-	/////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
+// 這個class為遊戲的結束狀態(Game Over)
+// 每個Member function的Implementation都要弄懂
+/////////////////////////////////////////////////////////////////////////////
 
-	class CGameStateOver : public CGameState {
-	public:
-		CGameStateOver(CGame *g);
-		void OnBeginState();							// 設定每次重玩所需的變數
-		void OnInit();
-	protected:
-		void OnMove();									// 移動遊戲元素
-		void OnShow();									// 顯示這個狀態的遊戲畫面
-	private:
-		int counter;	// 倒數之計數器
-	};
+class CGameStateOver : public CGameState {
+public:
+    CGameStateOver(CGame* g);
+    void OnBeginState();							// 設定每次重玩所需的變數
+    void OnInit();
+protected:
+    void OnMove();									// 移動遊戲元素
+    void OnShow();									// 顯示這個狀態的遊戲畫面
+private:
+    int counter;	// 倒數之計數器
+};
 
 }

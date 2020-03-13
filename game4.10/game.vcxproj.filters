@@ -183,5 +183,8 @@
     <Image Include="RES\1b picture.bmp">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="res\bitmap5.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>
