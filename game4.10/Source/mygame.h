@@ -95,6 +95,7 @@ namespace game_framework {
 	private:
 		const int		NUMBALLS;	// 球的總數
 		CMovingBitmap	cat;
+		CMovingBitmap	JP;
 		CMovingBitmap	background;	// 背景圖
 		CMovingBitmap	help;		// 說明圖
 		CBall			*ball;		// 球的陣列
