@@ -324,7 +324,9 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
+    <Image Include="RES\1b picture.bmp" />
     <Image Include="res\bitmap3.bmp" />
+    <Image Include="res\bitmap4.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
