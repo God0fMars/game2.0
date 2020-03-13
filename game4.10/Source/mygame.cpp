@@ -268,6 +268,7 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	// 移動彈跳的球
 	//
 	bball.OnMove();
+	cat.SetTopLeft(10, 10);
 }
 
 void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
@@ -304,6 +305,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	//
 	// 此OnInit動作會接到CGameStaterOver::OnInit()，所以進度還沒到100%
 	//
+	cat.LoadBitmap(IDB_1b_cat);
 }
 
 void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
@@ -387,5 +389,7 @@ void CGameStateRun::OnShow()
 	corner.ShowBitmap();
 	corner.SetTopLeft(SIZE_X-corner.Width(), SIZE_Y-corner.Height());
 	corner.ShowBitmap();
+	cat.ShowBitmap();
 }
+	
 }
